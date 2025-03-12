@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dharmalingam R - Portfolio</title>
+    <title>Dharmalingam R</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -125,6 +125,17 @@
             margin: 3px 0;
             transition: 0.4s;
         }
+        /* Tooltip Styles */
+        .tooltip {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 1001; /* Above other content */
+            font-size: 14px;
+        }
         /* Responsive Styles */
         @media (max-width: 600px) {
             nav {
@@ -169,7 +180,7 @@
                 <li><a href="#education">Education</a></li>
                 <li><a href="#rewards">Rewards</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="resume.pdf" id="downloadResume">Download Resume</a></li> <!-- Updated to allow download -->
+                <li><a href="resume.pdf" id="downloadResume" title="Right-click to open in a new tab">Download Resume</a></li> <!-- Updated to allow download -->
             </ul>
         </nav>
         <div class="hamburger" id="hamburger">
@@ -177,6 +188,7 @@
             <div class="line"></div>
             <div class="line"></div>
         </div>
+        <div class="tooltip" id="tooltip">Right-click to open in a new tab</div> <!-- Tooltip -->
     </div>
     <div class="content">
         <section id="about">
@@ -249,6 +261,18 @@
             if (!hamburger.contains(event.target) && !nav.contains(event.target)) {
                 nav.classList.remove('active'); // Close the menu if clicking outside
             }
+        });
+        // Show tooltip on hover over the download resume link
+        const downloadResume = document.getElementById('downloadResume');
+        const tooltip = document.getElementById('tooltip');
+        downloadResume.addEventListener('mouseenter', () => {
+            tooltip.style.display = 'block';
+            const rect = downloadResume.getBoundingClientRect();
+            tooltip.style.left = `${rect.left + window.scrollX}px`;
+            tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
+        });
+        downloadResume.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
         });
         // Highlight the active menu item and scroll smoothly
         const navLinks = document.querySelectorAll('nav ul li a');
